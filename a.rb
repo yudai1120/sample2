@@ -20,4 +20,4 @@ p people.name
 
 class Childpeople < People
 end
-Childpeople.name
+Childpeople.namerail
