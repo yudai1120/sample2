@@ -8,11 +8,28 @@
               <%= topic.user.name %>
             </h2>
             <%= image_tag topic.image.url %>
-            <%= image_tag "heart-black.png", class: "topic-index-icon" %>
-            <%= image_tag "comment.png", class: "topic-index-icon" %>
+            <% if !topic.favorite_users.include?(current_user) %>
+              <%= link_to favorites_path(topic_id: topic.id), method: :post do %>
+                <i class="fa fa-heart favorite-btn"></i>
+              <% end %>
+            <% else %>
+              <%= link_to favorites_path(topic_id: topic.id), method: :delete do %>
+                <i class="fa fa-heart red-favorite-btn"></i>
+              <% end %>
+            <% end %>
+            
+              <%= topic.favorite_users.count %>
+            
+            <%= link_to comments_new_path(topic_id: topic.id) do %>
+              <%= image_tag "comment.png", class: "topic-index-icon" %>
+            <% end %>
+              
             <p class="topic-text">
               <%= topic.description %>
             </p>
+            <% topic.comments.each do |comment| %>
+              <p><%= comment.content %></p>
+            <% end %>
           </div>
         </div>
       </div>
